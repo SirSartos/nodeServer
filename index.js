@@ -1,6 +1,7 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var cors = require('cors');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const fs = require('fs');
 
 const app = express();
 
@@ -12,14 +13,17 @@ const port = process.env.PORT || 3000;
 var image = [];
 
 app.post('/saveImage', (req, res) => {
-
-  this.image.push(req.body);
- 
+  const imageUrl = JSON.stringify(req.body);
+  image.push(imageUrl);
+  console.log(req.body);
+  // fs.appendFile('savedImages.txt', imageUrl, (err) =>{
+  //   if(err) throw err;
+  // });
   res.send('Daten erfolgreich gespeichert');
 });
 
 app.get('/getImage', (req, res)=>{
-    res.send(this.image);
+    res.send(image);
 });
 
 if (process.env.NODE_ENV !== 'production') {
